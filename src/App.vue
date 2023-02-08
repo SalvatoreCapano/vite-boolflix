@@ -8,7 +8,8 @@
     return {
       searchQuery: "",
       resultMovies: "",
-      resultTVShows: ""
+      resultTVShows: "",
+      posterBaseUrl: "https://image.tmdb.org/t/p/"
     }
   },
   methods: {
@@ -20,6 +21,10 @@
       else {
         return `https://flagsapi.com/${country.toUpperCase()}/flat/64.png`;
       }
+    },
+    convertRating(vote) {
+      let newVote = Math.ceil(vote/2);
+      return newVote;
     }
   },
   computed: {
@@ -58,8 +63,10 @@
         <p>Titolo: {{ movie.title }}</p>
         <p>Titolo Originale: {{ movie.original_title }}</p>
         <p>Voto: {{ movie.vote_average }}</p>
+        <font-awesome-icon icon="fa-solid fa-star" v-for="n in this.convertRating(movie.vote_average)"/>
         <p>Linuga: {{ movie.original_language }}</p>
         <img :src="getFlag(movie.original_language)" :alt="`lang: ${movie.original_language}`">
+        <img :src="`${this.posterBaseUrl}/w500/${movie.poster_path}`" :alt="`${movie.original_title}`">
       </div>
     </section>
 
@@ -69,8 +76,10 @@
         <p>Titolo: {{ show.name }}</p>
         <p>Titolo Originale: {{ show.original_name }}</p>
         <p>Voto: {{ show.vote_average }}</p>
+        <font-awesome-icon icon="fa-solid fa-star" v-for="n in this.convertRating(show.vote_average)"/>
         <p>Lingua Originale: {{ show.original_language }}</p>
         <img :src="getFlag(show.original_language)" :alt="`lang: ${show.original_language}`">
+        <img :src="`${this.posterBaseUrl}/w500/${show.poster_path}`" :alt="`${show.original_title}`">
       </div>
     </section>
   </main>
