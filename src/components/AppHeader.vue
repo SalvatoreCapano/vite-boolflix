@@ -3,7 +3,7 @@
     import { store } from '../store';
 
     export default {
-        name: "appHeader",
+        name: "AppHeader",
         data () {
             return {
                 store
@@ -44,6 +44,11 @@
 @import "../style/partials/variables.scss";
 
 header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 20;
+
     padding: 18px 26px;
     background-color: $darker-color;
   .container {
