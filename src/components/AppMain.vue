@@ -54,7 +54,9 @@
             :flagUrl="getFlag(movie.original_language)"
             :imgUrl="movie.poster_path"
             :id="movie.id"
+            :type="'movie'"
             />
+
             
     </section>
     
@@ -70,7 +72,8 @@
             :flagUrl="getFlag(show.original_language)"
             :imgUrl="show.poster_path"
             :id="show.id"
-        />
+            :type="'tv'"
+            />
 
     </section>
 

@@ -13,18 +13,18 @@
           flagUrl: String,
           imgUrl: String,
           id: Number,
+          type: String
         },
         data () {
             return {
                 store,
                 cast: [],
-                myId: this.id,
                 posterBaseUrl: "https://image.tmdb.org/t/p/w500/"
             }
         },
         methods: {
           getCast() {
-            axios.get(`${store.baseUrl}movie/${this.myId}/credits?api_key=${store.apiKey}`)
+            axios.get(`${store.baseUrl}${this.type}/${this.id}/credits?api_key=${store.apiKey}`)
               .then((response) => {
                 response.data.cast.forEach((actor, index) => {
                   if (index <= 4) {
@@ -67,7 +67,7 @@
         <div class="castGroup">
           <span>Cast</span>
           <ul>
-            <li v-for="actor in this.cast">{{ actor }}</li>
+            <li v-for="actor in cast">{{ actor }}</li>
           </ul>
         </div>
 
