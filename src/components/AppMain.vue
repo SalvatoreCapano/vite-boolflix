@@ -55,6 +55,7 @@
             :imgUrl="movie.poster_path"
             :id="movie.id"
             :type="'movie'"
+            :genreIds="movie.genre_ids"
             />
 
             
@@ -73,6 +74,7 @@
             :imgUrl="show.poster_path"
             :id="show.id"
             :type="'tv'"
+            :genreIds="show.genre_ids"
             />
 
     </section>

@@ -13,12 +13,14 @@
           flagUrl: String,
           imgUrl: String,
           id: Number,
-          type: String
+          type: String,
+          genreIds: Array
         },
         data () {
             return {
                 store,
                 cast: [],
+                genres: [],
                 posterBaseUrl: "https://image.tmdb.org/t/p/w500/"
             }
         },
@@ -32,10 +34,19 @@
                   }
                 });
               })
+          },
+          getGenre() {
+            // console.log("Genre Ids", this.genreIds);
+            this.genreIds.forEach(id => {
+              store.allGenres.forEach(genre => {
+                if (genre.id == id) this.genres.push(genre.name);
+              });
+            });
           }
         },
-        created () {
+        created() {
           this.getCast();
+          this.getGenre();
         }
     }
 
@@ -57,10 +68,10 @@
 
         <h3 class="title">{{ title }}</h3>
 
-        <p class="ogTitle">Titolo Originale: {{ ogTitle }}</p>
+        <p class="ogTitle">Original Title: {{ ogTitle }}</p>
 
         <div class="langGroup">
-          <span>Lingua: {{ lang }}</span>
+          <span>Lang.: {{ lang }}</span>
           <img :src="flagUrl" :alt="lang">
         </div>
 
@@ -69,6 +80,14 @@
           <ul>
             <li v-for="actor in cast">{{ actor }}</li>
           </ul>
+        </div>
+
+        <div class="genreGroup">
+          <span>Genre</span>
+          <ul>
+            <li v-for="genre in this.genres">{{ genre }}</li>
+          </ul>
+
         </div>
 
         <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
@@ -119,6 +138,8 @@
     .back {
       transform: rotateY(180deg);
       padding: 5px;
+
+      overflow-y: auto;
     }
   }
 
@@ -153,7 +174,7 @@
     width: 30px;
   }
 }
-.castGroup {
+div[class$="Group"] {
   margin-bottom: 8px;   
   ul {
     list-style: none;

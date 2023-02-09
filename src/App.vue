@@ -14,6 +14,8 @@ import AppMain from './components/AppMain.vue';
   data () {
     return {
       store,
+      moviesGenresOK: false,
+      showsGenresOK: false
     }
   },
   methods: {
@@ -29,6 +31,35 @@ import AppMain from './components/AppMain.vue';
           if (mediaType == "tv") store.resultTVShows = response.data.results;   
         })
     },
+    getGenres() {
+      axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${store.apiKey}&language=en-US`)
+        .then((response) => {
+          store.genresMovies = response.data.genres;
+          // console.log("Generi Movies", store.genresMovies[1].id);
+          this.moviesGenresOK = true;
+          this.mergeGenresArrays();
+        })
+
+      axios.get(`https://api.themoviedb.org/3/genre/tv/list?api_key=${store.apiKey}&language=en-US`)
+      .then((response) => {
+        store.genresShows = response.data.genres;
+        this.showsGenresOK = true;
+        this.mergeGenresArrays();
+      })
+    },
+    mergeGenresArrays () {
+      // Controlla se sono arrivati dati dei generi sia dei film che delle serie tv
+      if (this.moviesGenresOK && this.showsGenresOK) {
+
+        let ids = new Set(store.genresMovies.map(d => d.id));
+        store.allGenres = [...store.genresMovies, ...store.genresShows.filter(d => !ids.has(d.id))];
+
+        // console.log("All Genres", store.allGenres);
+      }
+    }
+  },
+  created() {
+    this.getGenres ();
   }
 };
 </script>

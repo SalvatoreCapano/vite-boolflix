@@ -5,5 +5,8 @@ export const store = reactive({
     resultMovies: null,
     resultTVShows: null,
     baseUrl: "https://api.themoviedb.org/3/",
-    apiKey: "c5eed5002b0aa99da4cba9755d0e6251"
+    apiKey: "c5eed5002b0aa99da4cba9755d0e6251",
+    genresMovies: {},
+    genresShows: {},
+    allGenres: {}
 });
