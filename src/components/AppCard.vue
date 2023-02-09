@@ -1,22 +1,41 @@
 <script>
 
+    import axios from 'axios';
     import { store } from '../store';
 
     export default {
         name: "AppCard",
-        data () {
-            return {
-                store,
-                posterBaseUrl: "https://image.tmdb.org/t/p/w500/"
-            }
-        },
-        props:{
+        props: {
           title: String,
           ogTitle: String,
           vote: Number,
           lang: String,
           flagUrl: String,
           imgUrl: String,
+          id: Number,
+        },
+        data () {
+            return {
+                store,
+                cast: [],
+                myId: this.id,
+                posterBaseUrl: "https://image.tmdb.org/t/p/w500/"
+            }
+        },
+        methods: {
+          getCast() {
+            axios.get(`${store.baseUrl}movie/${this.myId}/credits?api_key=${store.apiKey}`)
+              .then((response) => {
+                response.data.cast.forEach((actor, index) => {
+                  if (index <= 4) {
+                    this.cast.push(actor.name);
+                  }
+                });
+              })
+          }
+        },
+        created () {
+          this.getCast();
         }
     }
 
@@ -29,18 +48,32 @@
     <div class="cardInner">
 
       <div class="front">
+
         <img :src="posterBaseUrl + imgUrl" :alt="ogTitle" class="poster">
-      </div>
+
+      </div> <!-- /front-->
       
       <div class="back">
+
         <h3 class="title">{{ title }}</h3>
+
         <p class="ogTitle">Titolo Originale: {{ ogTitle }}</p>
+
         <div class="langGroup">
           <span>Lingua: {{ lang }}</span>
           <img :src="flagUrl" :alt="lang">
         </div>
+
+        <div class="castGroup">
+          <span>Cast</span>
+          <ul>
+            <li v-for="actor in this.cast">{{ actor }}</li>
+          </ul>
+        </div>
+
         <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
-      </div>
+
+      </div> <!-- /back-->
 
     </div> <!-- /cardInner-->
   </div> <!-- /card-->
@@ -118,6 +151,13 @@
 
   img {
     width: 30px;
+  }
+}
+.castGroup {
+  margin-bottom: 8px;   
+  ul {
+    list-style: none;
+    font-size: 0.8rem;
   }
 }
 

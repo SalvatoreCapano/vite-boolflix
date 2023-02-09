@@ -8,11 +8,6 @@
             return {
                 store
             }
-        },
-        methods: {
-            testfunc() {
-                console.log("test")
-            }
         }
     }
 
@@ -32,7 +27,7 @@
             </a>
 
             <div class="searchbar">
-                <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent'), testfunc()">
+                <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent')">
                 <button @click="$emit('searchEvent')">
                     <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                 </button>

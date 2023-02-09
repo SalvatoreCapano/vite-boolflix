@@ -32,7 +32,6 @@
             },
             convertRating(vote) {
                 let newVote = Math.ceil(vote/2);
-                console.log("Convert Rating")
                 return newVote;
             }
         }
@@ -44,7 +43,7 @@
 <template>
 
     <!-- Movies Section -->
-    <section v-if="(store.resultMovies != '')">
+    <section v-if="(store.resultMovies != null)">
         <h2 class="sectionTitle">Movies</h2>
 
         <AppCard v-for="movie in store.resultMovies"
@@ -54,12 +53,13 @@
             :lang="movie.original_language"
             :flagUrl="getFlag(movie.original_language)"
             :imgUrl="movie.poster_path"
-        />
-
+            :id="movie.id"
+            />
+            
     </section>
     
     <!-- TV Shows Section -->
-    <section v-if="(store.resultTVShows != '')">
+    <section v-if="(store.resultTVShows != null)">
         <h2 class="sectionTitle">TV Shows</h2>
 
         <AppCard v-for="show in store.resultTVShows"
@@ -69,6 +69,7 @@
             :lang="show.original_language"
             :flagUrl="getFlag(show.original_language)"
             :imgUrl="show.poster_path"
+            :id="show.id"
         />
 
     </section>

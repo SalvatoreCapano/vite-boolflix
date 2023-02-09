@@ -14,18 +14,21 @@ import AppMain from './components/AppMain.vue';
   data () {
     return {
       store,
-      baseUrl: "https://api.themoviedb.org/3/",
-      apiKey: "c5eed5002b0aa99da4cba9755d0e6251"
     }
   },
   methods: {
     getData(mediaType) {
-      axios.get(`https://api.themoviedb.org/3/search/${mediaType}?api_key=${this.apiKey}&query=${store.searchQuery}`)
+      // Reset
+      store.resultMovies = null;
+      store.resultTVShows = null;
+
+      // Richiesta
+      axios.get(`${store.baseUrl}search/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}`)
         .then((response) => {
           if (mediaType == "movie") store.resultMovies = response.data.results;
           if (mediaType == "tv") store.resultTVShows = response.data.results;   
         })
-    }
+    },
   }
 };
 </script>
