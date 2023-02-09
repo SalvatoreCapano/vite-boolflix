@@ -8,6 +8,11 @@
             return {
                 store
             }
+        },
+        methods: {
+            testfunc() {
+                console.log("test")
+            }
         }
     }
 
@@ -27,7 +32,7 @@
             </a>
 
             <div class="searchbar">
-                <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent')">
+                <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent'), testfunc()">
                 <button @click="$emit('searchEvent')">
                     <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                 </button>
@@ -49,8 +54,13 @@ header {
     left: 0;
     z-index: 20;
 
-    padding: 18px 26px;
+    padding: 18px 0;
+
+    opacity: 0.98;
+
     background-color: $darker-color;
+    box-shadow: 0px 6px 20px 2px #00000080;
+
   .container {
     @include flexRowSpaced;
   }
@@ -64,8 +74,11 @@ header {
 }
 .searchbar {
     border-radius: 12px;
-    border: 1px solid gray;
+    border: 1px solid $border-color;
     background-color: $darkest-color;
+
+    display: flex;
+    align-items: center;
 
     color: aliceblue;
 
@@ -85,7 +98,7 @@ header {
     button {
         padding: 10px 12px;
 
-        font-size: 1rem;
+        font-size: 1.1rem;
 
         background: none;
         border: none;

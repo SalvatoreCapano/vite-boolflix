@@ -11,6 +11,7 @@ export default defineConfig({
         `
         @use "src/style/main.scss" as *;
         @use "src/style/partials/mixin.scss" as *;
+        @use "src/style/partials/responsive.scss" as *;
         `
       },
     },

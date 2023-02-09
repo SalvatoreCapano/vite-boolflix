@@ -13,29 +13,29 @@
                 store
             }
         },
-    methods: {
-        getFlag (lang) {
-            // Lingue piu' comuni [Inglese, italiano, giapponese]
-            if (lang == "en") {
-                return new URL("../assets/commonFlags/flag_US.png", import.meta.url).href;
+        methods: {
+            getFlag (lang) {
+                // Lingue piu' comuni [Inglese, italiano, giapponese]
+                if (lang == "en") {
+                    return new URL("../assets/commonFlags/flag_US.png", import.meta.url).href;
+                }
+                else if (lang == "it") {
+                    return new URL("../assets/commonFlags/flag_IT.png", import.meta.url).href;
+                }
+                else if (lang == "ja") {
+                    return new URL("../assets/commonFlags/flag_JA.png", import.meta.url).href;
+                }
+                // Tutte le altre lingue
+                else {
+                    return `https://flagsapi.com/${lang.toUpperCase()}/flat/64.png`;
+                }
+            },
+            convertRating(vote) {
+                let newVote = Math.ceil(vote/2);
+                console.log("Convert Rating")
+                return newVote;
             }
-            else if (lang == "it") {
-                return new URL("../assets/commonFlags/flag_IT.png", import.meta.url).href;
-            }
-            else if (lang == "ja") {
-                return new URL("../assets/commonFlags/flag_JA.png", import.meta.url).href;
-            }
-            // Tutte le altre lingue
-            else {
-                return `https://flagsapi.com/${lang.toUpperCase()}/flat/64.png`;
-            }
-        },
-        convertRating(vote) {
-            let newVote = Math.ceil(vote/2);
-            console.log("Convert Rating")
-            return newVote;
         }
-    }
     }
 
 </script>
@@ -44,7 +44,7 @@
 <template>
 
     <!-- Movies Section -->
-    <section>
+    <section v-if="(store.resultMovies != '')">
         <h2 class="sectionTitle">Movies</h2>
 
         <AppCard v-for="movie in store.resultMovies"
@@ -59,7 +59,7 @@
     </section>
     
     <!-- TV Shows Section -->
-    <section>
+    <section v-if="(store.resultTVShows != '')">
         <h2 class="sectionTitle">TV Shows</h2>
 
         <AppCard v-for="show in store.resultTVShows"
@@ -77,7 +77,6 @@
 
 
 <style lang="scss" scoped>
-// @import "../style/partials/variables.scss";
 
     section {
         display: flex;

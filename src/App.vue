@@ -4,7 +4,6 @@ import axios from 'axios';
 import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
-// import AppMovieSection from './components/AppMovieSection.vue';
 
   export default {
   name: "App",
@@ -14,21 +13,18 @@ import AppMain from './components/AppMain.vue';
   },
   data () {
     return {
-      store
+      store,
+      baseUrl: "https://api.themoviedb.org/3/",
+      apiKey: "c5eed5002b0aa99da4cba9755d0e6251"
     }
   },
-  computed: {
-    searchMovies() {
-      axios.get(`https://api.themoviedb.org/3/search/movie?api_key=c5eed5002b0aa99da4cba9755d0e6251&query=${store.searchQuery}`)
-          .then((response) => {
-            store.resultMovies = response.data.results;
-          });
-    },
-    searchTVShows() {
-      axios.get(`https://api.themoviedb.org/3/search/tv?api_key=c5eed5002b0aa99da4cba9755d0e6251&query=${store.searchQuery}`)
-          .then((response) => {
-            store.resultTVShows = response.data.results;
-          });
+  methods: {
+    getData(mediaType) {
+      axios.get(`https://api.themoviedb.org/3/search/${mediaType}?api_key=${this.apiKey}&query=${store.searchQuery}`)
+        .then((response) => {
+          if (mediaType == "movie") store.resultMovies = response.data.results;
+          if (mediaType == "tv") store.resultTVShows = response.data.results;   
+        })
     }
   }
 };
@@ -37,7 +33,7 @@ import AppMain from './components/AppMain.vue';
 
 <template>
 
-  <AppHeader @searchEvent="searchMovies, searchTVShows"/>
+  <AppHeader @searchEvent="getData('movie'), getData('tv')"/>
 
   <main>
     <div class="container">
