@@ -45,7 +45,7 @@
 
     <!-- Movies Section -->
     <section>
-        <h2>Movies</h2>
+        <h2 class="sectionTitle">Movies</h2>
 
         <AppCard v-for="movie in store.resultMovies"
             :title="movie.title"
@@ -60,7 +60,7 @@
     
     <!-- TV Shows Section -->
     <section>
-        <h2>TV Shows</h2>
+        <h2 class="sectionTitle">TV Shows</h2>
 
         <AppCard v-for="show in store.resultTVShows"
             :title="show.name"
@@ -78,18 +78,19 @@
 
 <style lang="scss" scoped>
 // @import "../style/partials/variables.scss";
-main {
-  background-color: #141414;
-  section {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
 
-    h2 {
-      flex-basis: 100%;
-    }
+    section {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 1rem;
+
+        padding: 1.75rem 0;
+
+        .sectionTitle {
+            flex-basis: 100%;
+            color: aliceblue;
+        }
   }
-}
 
 </style>

@@ -84,10 +84,17 @@ header {
 
     button {
         padding: 10px 12px;
+
         font-size: 1rem;
+
         background: none;
         border: none;
-        color: currentColor
+        color: currentColor;
+        cursor: pointer;
+
+        &:active{
+            color: $brand-color;
+        }
     }
 
     &:focus-within {

@@ -53,6 +53,8 @@ import AppMain from './components/AppMain.vue';
 <style lang="scss">
 @import "./style/partials/reset.scss";
 main {
+  min-height: 100vh;
+  min-height: calc(100vh - 50px - 36px); // viewport - logo - paddingHeader
   background-color: #141414;
 }
 </style>

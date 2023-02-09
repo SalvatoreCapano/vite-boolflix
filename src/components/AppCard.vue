@@ -26,28 +26,99 @@
 <template>
 
   <div class="card">
+    <div class="cardInner">
 
-    <p>Titolo: {{ title }}</p>
-    <p>Titolo Originale: {{ ogTitle }}</p>
-    <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
-    <p>Lingua: {{ lang }}</p>
-    <img :src="flagUrl" :alt="lang">
-    <img :src="posterBaseUrl + imgUrl" :alt="ogTitle">
+      <div class="front">
+        <img :src="posterBaseUrl + imgUrl" :alt="ogTitle" class="poster">
+      </div>
+      
+      <div class="back">
+        <h3 class="title">{{ title }}</h3>
+        <p class="ogTitle">Titolo Originale: {{ ogTitle }}</p>
+        <div class="langGroup">
+          <span>Lingua: {{ lang }}</span>
+          <img :src="flagUrl" :alt="lang">
+        </div>
+        <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
+      </div>
 
-  </div>
+    </div> <!-- /cardInner-->
+  </div> <!-- /card-->
 
 </template>
 
 
 <style lang="scss" scoped>
-// @import "../style/partials/variables.scss";
+@import "../style/partials/variables.scss";
 .card {
-    border: 2px solid red;
-    width: 240px;
+  width: 200px;
+  height: 300px;
+
+  color: white;
+
+  cursor: pointer;
+
+  perspective: 1000px;
+    
+  .cardInner {
+    width: 100%;
+    height: 100%;
+      
+    position: relative;
+    background-color: $darkest-color;
+      
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+      
+    .front, .back {
+      position: absolute;
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 100%;
+
+      background-color: $darkest-color;
+      -webkit-backface-visibility: hidden; /* Per Safari */
+      backface-visibility: hidden;
+      }
+
+    .back {
+      transform: rotateY(180deg);
+      padding: 5px;
+    }
   }
 
-  .card img {
-    width: 50px;
+  &:hover .cardInner {
+    transform: rotateY(180deg);
+    transition: transform 0.5s 0.5s;
   }
+}
+
+.poster {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.title {
+  margin-bottom: 8px;
+}
+
+.ogTitle {
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+.langGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  margin-bottom: 12px;
+
+  img {
+    width: 30px;
+  }
+}
 
 </style>
