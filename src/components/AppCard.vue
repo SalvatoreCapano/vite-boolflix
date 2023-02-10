@@ -21,7 +21,8 @@
                 store,
                 cast: [],
                 genres: [],
-                posterBaseUrl: "https://image.tmdb.org/t/p/w500/"
+                posterBaseUrl: "https://image.tmdb.org/t/p/",
+                postCoverSize: "w500/"
             }
         },
         methods: {
@@ -47,6 +48,12 @@
         created() {
           this.getCast();
           this.getGenre();
+        },
+        computed: {
+          filterByGenre() {
+            if (this.genreIds.includes(store.searchGenre) || store.searchGenre == "") return true
+            else return false; 
+          }
         }
     }
 
@@ -55,12 +62,12 @@
 
 <template>
 
-  <div class="card">
+  <div class="card" v-show="this.filterByGenre">
     <div class="cardInner">
 
       <div class="front">
 
-        <img :src="posterBaseUrl + imgUrl" :alt="ogTitle" class="poster">
+        <img :src="posterBaseUrl + postCoverSize + imgUrl" :alt="ogTitle" class="poster">
 
       </div> <!-- /front-->
       
@@ -68,7 +75,7 @@
 
         <h3 class="title">{{ title }}</h3>
 
-        <p class="ogTitle">Original Title: {{ ogTitle }}</p>
+        <p class="ogTitle" v-if="!(title == ogTitle)">Original Title: {{ ogTitle }}</p>
 
         <div class="langGroup">
           <span>Lang.: {{ lang }}</span>
@@ -90,7 +97,9 @@
 
         </div>
 
+        <!-- <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/> -->
         <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
+        <font-awesome-icon icon="fa-regular fa-star" v-for="n in (5 - vote)"/>
 
       </div> <!-- /back-->
 

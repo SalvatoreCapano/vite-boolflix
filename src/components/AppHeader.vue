@@ -26,11 +26,23 @@
                 </div> <!-- /logo-->
             </a>
 
-            <div class="searchbar">
-                <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent')">
-                <button @click="$emit('searchEvent')">
-                    <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-                </button>
+            <div class="box">
+
+                <!-- <select id="" v-model="store.searchGenre" @change="$emit('searchEvent', 'discover')"> -->
+                <select id="" v-model="store.searchGenre" @change="$emit('filterEvent')">
+                    <option value="" selected>--All Genres--</option>
+                    <option :value="genre.id" v-for="genre in store.allGenres">{{ genre.name }}</option>
+                </select>
+
+                <div class="searchbar">
+                    <!-- <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent', 'search')"> -->
+                    <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent')">
+                    <!-- <button @click="$emit('searchEvent', 'search')"> -->
+                    <button @click="$emit('searchEvent')">
+                        <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+                    </button>
+                </div> <!-- /searchbar-->
+
             </div>
 
         </div> <!-- /container-->
@@ -66,6 +78,20 @@ header {
     height: 50px;
     display: block;
   }
+}
+
+.box {
+    @include flexRowSpaced;
+    gap: 1rem;
+
+    select {
+        color: aliceblue;
+        padding: 8px 12px;
+        border-radius: 12px;
+        border: 1px solid $border-color;
+        background-color: $darkest-color;
+
+    }
 }
 .searchbar {
     border-radius: 12px;
