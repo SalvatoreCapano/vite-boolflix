@@ -27,10 +27,12 @@ export default {
   },
   methods: {
     getCast() {
+      // Richiesta API del cast del film/serie
       axios.get(`${store.baseUrl}${this.type}/${this.id}/credits?api_key=${store.apiKey}`)
         .then((response) => {
           response.data.cast.forEach((actor, index) => {
             if (index <= 4) {
+              // Inserisce i primi 4 nomi del cast nell'array
               this.cast.push(actor.name);
             }
           });
@@ -39,6 +41,7 @@ export default {
     getGenre() {
       this.genreIds.forEach(id => {
         store.allGenres.forEach(genre => {
+          // Controlla i generi a cui e' associato il film e inserisce i loro nomi in un array
           if (genre.id == id) this.genres.push(genre.name);
         });
       });
@@ -50,6 +53,7 @@ export default {
   },
   computed: {
     filterByGenre() {
+      // Restituisce un valore true/false che sara' usato per valutare se l'elemento deve essere mostrato o meno
       if (this.genreIds.includes(store.searchGenre) || store.searchGenre == "") return true
       else return false;
     }

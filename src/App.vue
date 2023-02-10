@@ -4,12 +4,14 @@ import axios from 'axios';
 import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
+import AppTrendingMovie from './components/AppTrendingMovie.vue';
 
 export default {
   name: "App",
   components: {
     AppHeader,
-    AppMain
+    AppMain,
+    AppTrendingMovie
   },
   data() {
     return {
@@ -19,13 +21,23 @@ export default {
     }
   },
   methods: {
-    getData(mediaType) {
+    getData(action, mediaType) {
+      // Ottiene i dati relativi al film/serie cercato
+      // action -> search | discover
+      //mediatype -> movie | tv
+
       store.loading = true;
       // Reset
       store.resultMovies = null;
       store.resultTVShows = null;
 
-      axios.get(`${store.baseUrl}search/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}`)
+      // Cambia il valore di "firstSearchDone", che indica se la ricerca attuale e'
+      //quella fatta all'avvio del programma o quella avviata dall'utente
+      if (action != "discover") store.firstSearchDone = true;
+      else store.firstSearchDone = false;
+
+      // Richiesta
+      axios.get(`${store.baseUrl}${action}/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}`)
         .then((response) => {
           if (mediaType == "movie") store.resultMovies = response.data.results;
           if (mediaType == "tv") store.resultTVShows = response.data.results;
@@ -35,6 +47,7 @@ export default {
         })
     },
     getGenres(mediaType) {
+      // Ottiene i generi disponibili per movie / serie tv
       axios.get(`https://api.themoviedb.org/3/genre/${mediaType}/list?api_key=${store.apiKey}&language=en-US`)
         .then((response) => {
           if (mediaType == "movie") {
@@ -47,20 +60,28 @@ export default {
         })
     },
     mergeGenresArrays() {
+      // Unisce gli array che contengono i generi in un unico array
+
       // Controlla se sono arrivati dati dei generi sia dei film che delle serie tv
       if (store.genresMovies != null && store.genresShows != null) {
 
         let ids = new Set(store.genresMovies.map(d => d.id));
         store.allGenres = [...store.genresMovies, ...store.genresShows.filter(d => !ids.has(d.id))];
 
+        // Svuota gli array che contengono i generi separati, ora inutili
         delete store.genresMovies;
         delete store.genresShows;
       }
     }
   },
   created() {
+    // Richiesta dei generi
     this.getGenres("movie");
     this.getGenres("tv");
+
+    // Richiesta dei film e le serie Trending
+    this.getData('discover', 'movie');
+    this.getData('discover', 'tv');
   }
 };
 </script>
@@ -68,17 +89,19 @@ export default {
 
 <template>
 
-  <!-- <AppHeader @searchEvent="(action) => (getData(action, 'movie'), getData(action, 'tv'))"/> -->
-  <AppHeader @searchEvent="(getData('movie'), getData('tv'))" />
+  <AppHeader @searchEvent="(getData('search', 'movie'), getData('search', 'tv'))" />
 
   <main>
+
+    <AppTrendingMovie v-if="store.resultMovies != null"/>
+
     <div class="container">
 
       <AppMain />
 
-    </div>
-  </main>
+    </div> <!-- /container-->
 
+  </main>
 
 </template>
 
@@ -89,10 +112,13 @@ export default {
 
 main {
   min-height: 100vh;
-  min-height: calc(100vh - 50px - 36px); //viewport - logo - paddingHeader
+  // min-height: calc(100vh - 50px - 36px); 
+  //viewport - logo - paddingHeader
+  // padding-top: 4rem;
   background-color: $dark-color;
 
   overflow-x: hidden;
   overflow-y: auto;
 }
+
 </style>

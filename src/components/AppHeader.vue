@@ -60,14 +60,15 @@ export default {
 @use "src/style/partials/variables.scss" as *;
 
 header {
-    position: sticky;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 20;
 
+    width: 100%;
     padding: 18px 0;
 
-    opacity: 0.98;
+    opacity: 0.96;
     transition: opacity 0.2s;
 
     background-color: $darker-color;

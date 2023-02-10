@@ -50,7 +50,7 @@ select {
     z-index: 10;
 
     width: 100vw;
-    height: 75vh;
+    height: calc(100vh - 50px - 36px - 1rem - 49px); //viewport - logo - paddingHeader - gapLogo/searchbar - alt. searchbar
 
     overflow: hidden;
 
@@ -110,17 +110,14 @@ select {
     }
 
     &.clicked {
-
         .bar:first-child {
             top: 50%;
             transform: translateY(-50%) rotate(45deg);
         }
-
         .bar:last-child {
             top: 50%;
             transform: translateY(-50%) rotate(-45deg);
         }
-
         .bar:nth-child(2) {
             transform: translateY(-50%) scaleX(0);
         }

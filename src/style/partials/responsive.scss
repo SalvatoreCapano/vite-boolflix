@@ -33,12 +33,39 @@
         }
     }
 
+    .container section {
+        &::before, &::after {
+            height: 240px !important;
+        }
+    }
+
     .card {
         width: 160px !important;
         height: 240px !important;
     }
 
     main {
-        min-height: calc(100vh - 50px - 36px - 1rem - 49px) !important;  //viewport - logo - paddingHeader - gapLogo/searchbar - alt. searchbar
+        // min-height: calc(100vh - 50px - 36px - 1rem - 49px) !important;  
+        //viewport - logo - paddingHeader - gapLogo/searchbar - alt. searchbar
+        padding-top: 8rem !important;
+        // margin-top: 3rem;
+    }
+
+    #movieSection {
+        margin-top: 1rem;
+    }
+
+    .suggestedTrendingMovie {
+        .info {
+            // align-items: flex-start !important;
+            width: 100% !important;
+            justify-content: flex-start !important;
+            p {
+                display: none;
+            }
+        }
+        img {
+            width: 100% !important;
+        }
     }
 }

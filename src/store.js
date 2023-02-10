@@ -11,5 +11,6 @@ export const store = reactive({
     genresShows: null,
     allGenres: [],
     loading: false,
-    isMenuOpen: false
+    isMenuOpen: false,
+    firstSearchDone: false
 });
