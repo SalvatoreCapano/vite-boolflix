@@ -112,13 +112,12 @@
 <style lang="scss" scoped>
 @import "../style/partials/variables.scss";
 .card {
-  width: 200px;
-  height: 300px;
+  width: $card-width;
+  height: $card-heigth;
 
   color: white;
 
   cursor: pointer;
-
   perspective: 1000px;
     
   .cardInner {

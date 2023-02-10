@@ -2,11 +2,13 @@
 
     import { store } from '../store';
     import AppCard from '../components/AppCard.vue';
+    import AppCardPlaceholder from '../components/AppCardPlaceholder.vue';
 
     export default {
         name: "AppMovie",
         components: {
-            AppCard
+            AppCard,
+            AppCardPlaceholder
         },
         data () {
             return {
@@ -46,7 +48,7 @@
     <section v-if="(store.resultMovies != null)">
         <h2 class="sectionTitle">Movies</h2>
 
-        <AppCard v-for="movie in store.resultMovies"
+        <AppCard v-for="movie in store.resultMovies" v-if="store.loading == false"
             :title="movie.title"
             :ogTitle="movie.original_title"
             :vote="convertRating(movie.vote_average)"
@@ -57,6 +59,8 @@
             :type="'movie'"
             :genreIds="movie.genre_ids"
             />
+        
+        <AppCardPlaceholder v-for="n in 10" v-else/>
 
             
     </section>
@@ -65,7 +69,7 @@
     <section v-if="(store.resultTVShows != null)">
         <h2 class="sectionTitle">TV Shows</h2>
 
-        <AppCard v-for="show in store.resultTVShows"
+        <AppCard v-for="show in store.resultTVShows" v-if="store.loading == false"
             :title="show.name"
             :ogTitle="show.original_name"
             :vote="convertRating(show.vote_average)"
@@ -76,6 +80,8 @@
             :type="'tv'"
             :genreIds="show.genre_ids"
             />
+
+        <AppCardPlaceholder v-for="n in 10" v-else/>
 
     </section>
 

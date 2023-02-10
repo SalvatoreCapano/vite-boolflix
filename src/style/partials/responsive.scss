@@ -4,15 +4,27 @@
             flex-wrap: wrap;
             justify-content: center !important;
             .logo {
-                margin-bottom: 20px;
+                margin-bottom: 24px;
             }
-            .searchbar {
-                flex-basis: 100%;
 
-                input {
-                    width: 100%;
+            .box {
+                flex-basis: 100%;
+                flex-wrap: wrap;
+
+                justify-content: flex-end;
+                
+                .searchbar {
+                    flex-basis: 100%;
+    
+                    input {
+                        width: 100%;
+                    }
                 }
             }
         }
+    }
+
+    main {
+        // padding-top: 11.5rem !important;
     }
 }

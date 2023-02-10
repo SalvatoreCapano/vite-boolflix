@@ -30,7 +30,7 @@
 
                 <!-- <select id="" v-model="store.searchGenre" @change="$emit('searchEvent', 'discover')"> -->
                 <select id="" v-model="store.searchGenre" @change="$emit('filterEvent')">
-                    <option value="" selected>--All Genres--</option>
+                    <option value="" selected>All Genres</option>
                     <option :value="genre.id" v-for="genre in store.allGenres">{{ genre.name }}</option>
                 </select>
 
@@ -91,6 +91,9 @@ header {
         border: 1px solid $border-color;
         background-color: $darkest-color;
 
+        &:focus{
+            border-color: $brand-color;
+        }
     }
 }
 .searchbar {

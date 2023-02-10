@@ -9,5 +9,6 @@ export const store = reactive({
     apiKey: "c5eed5002b0aa99da4cba9755d0e6251",
     genresMovies: null,
     genresShows: null,
-    allGenres: []
+    allGenres: [],
+    loading: false
 });

@@ -21,6 +21,7 @@ import AppMain from './components/AppMain.vue';
   methods: {
     // getData(action, mediaType) {
     getData(mediaType) {
+      store.loading = true;
       // Reset
       store.resultMovies = null;
       store.resultTVShows = null;
@@ -36,7 +37,10 @@ import AppMain from './components/AppMain.vue';
       axios.get(`${store.baseUrl}search/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}`)
         .then((response) => {
           if (mediaType == "movie") store.resultMovies = response.data.results;
-          if (mediaType == "tv") store.resultTVShows = response.data.results;   
+          if (mediaType == "tv") store.resultTVShows = response.data.results;
+          setTimeout(() => {
+            store.loading = false;
+          }, 1000)
         })
     },
     getGenres(mediaType) {
@@ -44,11 +48,9 @@ import AppMain from './components/AppMain.vue';
         .then((response) => {
           if (mediaType == "movie") {
             store.genresMovies = response.data.genres;
-            // this.moviesGenresOK = true;
           }
           else if (mediaType == "tv") {
             store.genresShows = response.data.genres;
-            // this.showsGenresOK = true;
           }
           this.mergeGenresArrays();
           console.log("Tutti i generi", store.allGenres);
@@ -56,13 +58,13 @@ import AppMain from './components/AppMain.vue';
     },
     mergeGenresArrays () {
       // Controlla se sono arrivati dati dei generi sia dei film che delle serie tv
-      // if (this.moviesGenresOK && this.showsGenresOK) {
       if (store.genresMovies != null && store.genresShows != null) {
 
         let ids = new Set(store.genresMovies.map(d => d.id));
         store.allGenres = [...store.genresMovies, ...store.genresShows.filter(d => !ids.has(d.id))];
 
-        // console.log("All Genres", store.allGenres);
+        delete store.genresMovies;
+        delete store.genresShows;
       }
     }
   },
@@ -72,14 +74,6 @@ import AppMain from './components/AppMain.vue';
   }
 };
 </script>
-
-<!-- 
-  Milestone 6 
-  Applicare un filtro alla ricerca
-  Il filtro deve essere applicato:
-  Ad ogni ricerca si controlla se un genere e' stato scelto e si filtra l'array dei risultati, NASCONDENDO gli elementi non voluti
-  Al cambio del filtro, cambiano i risultati mostrati (senza dover cercare di nuovo)
--->
 
 
 <template>
@@ -98,11 +92,13 @@ import AppMain from './components/AppMain.vue';
 
 </template>
 
+
 <style lang="scss">
 @import "./style/partials/reset.scss";
+@import "./style/partials/variables.scss";
 main {
   min-height: 100vh;
-  min-height: calc(100vh - 50px - 36px); // viewport - logo - paddingHeader
-  background-color: #141414;
+  min-height: calc(100vh - 50px - 36px);  //viewport - logo - paddingHeader
+  background-color: $dark-color;
 }
 </style>
