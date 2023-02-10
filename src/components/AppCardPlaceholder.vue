@@ -1,8 +1,8 @@
 <script>
 
-    export default {
-        name: "AppCardPlaceholder"
-    }
+export default {
+  name: "AppCardPlaceholder"
+}
 
 </script>
 
@@ -16,11 +16,14 @@
 
 
 <style lang="scss" scoped>
-@import "../style/partials/variables.scss";
+@use "src/style/partials/variables.scss" as *;
+
 .card {
   width: $card-width;
-  height: $card-heigth;
+  height: $card-height;
   background-color: $notSoDark-color;
+
+  flex-shrink: 0;
 
   overflow: hidden;
   position: relative;
@@ -38,8 +41,8 @@
 
     animation: placeholderFade 0.8s linear infinite;
 
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,0) 22%, rgba(64,64,64,1) 50%, rgba(255,255,255,0) 78%); 
+    background: rgb(255, 255, 255);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0) 22%, rgba(64, 64, 64, 1) 50%, rgba(255, 255, 255, 0) 78%);
   }
 
 }
@@ -48,9 +51,9 @@
   from {
     left: -100%;
   }
+
   to {
     left: 100%;
   }
 }
-
 </style>

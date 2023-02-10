@@ -1,61 +1,60 @@
 <script>
 
-    import axios from 'axios';
-    import { store } from '../store';
+import axios from 'axios';
+import { store } from '../store';
 
-    export default {
-        name: "AppCard",
-        props: {
-          title: String,
-          ogTitle: String,
-          vote: Number,
-          lang: String,
-          flagUrl: String,
-          imgUrl: String,
-          id: Number,
-          type: String,
-          genreIds: Array
-        },
-        data () {
-            return {
-                store,
-                cast: [],
-                genres: [],
-                posterBaseUrl: "https://image.tmdb.org/t/p/",
-                postCoverSize: "w500/"
-            }
-        },
-        methods: {
-          getCast() {
-            axios.get(`${store.baseUrl}${this.type}/${this.id}/credits?api_key=${store.apiKey}`)
-              .then((response) => {
-                response.data.cast.forEach((actor, index) => {
-                  if (index <= 4) {
-                    this.cast.push(actor.name);
-                  }
-                });
-              })
-          },
-          getGenre() {
-            // console.log("Genre Ids", this.genreIds);
-            this.genreIds.forEach(id => {
-              store.allGenres.forEach(genre => {
-                if (genre.id == id) this.genres.push(genre.name);
-              });
-            });
-          }
-        },
-        created() {
-          this.getCast();
-          this.getGenre();
-        },
-        computed: {
-          filterByGenre() {
-            if (this.genreIds.includes(store.searchGenre) || store.searchGenre == "") return true
-            else return false; 
-          }
-        }
+export default {
+  name: "AppCard",
+  props: {
+    title: String,
+    ogTitle: String,
+    vote: Number,
+    lang: String,
+    flagUrl: String,
+    imgUrl: String,
+    id: Number,
+    type: String,
+    genreIds: Array
+  },
+  data() {
+    return {
+      store,
+      cast: [],
+      genres: [],
+      posterBaseUrl: "https://image.tmdb.org/t/p/",
+      postCoverSize: "w500/"
     }
+  },
+  methods: {
+    getCast() {
+      axios.get(`${store.baseUrl}${this.type}/${this.id}/credits?api_key=${store.apiKey}`)
+        .then((response) => {
+          response.data.cast.forEach((actor, index) => {
+            if (index <= 4) {
+              this.cast.push(actor.name);
+            }
+          });
+        })
+    },
+    getGenre() {
+      this.genreIds.forEach(id => {
+        store.allGenres.forEach(genre => {
+          if (genre.id == id) this.genres.push(genre.name);
+        });
+      });
+    }
+  },
+  created() {
+    this.getCast();
+    this.getGenre();
+  },
+  computed: {
+    filterByGenre() {
+      if (this.genreIds.includes(store.searchGenre) || store.searchGenre == "") return true
+      else return false;
+    }
+  }
+}
 
 </script>
 
@@ -70,7 +69,7 @@
         <img :src="posterBaseUrl + postCoverSize + imgUrl" :alt="ogTitle" class="poster">
 
       </div> <!-- /front-->
-      
+
       <div class="back">
 
         <h3 class="title">{{ title }}</h3>
@@ -97,9 +96,8 @@
 
         </div>
 
-        <!-- <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/> -->
-        <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote"/>
-        <font-awesome-icon icon="fa-regular fa-star" v-for="n in (5 - vote)"/>
+        <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote" />
+        <font-awesome-icon icon="fa-regular fa-star" v-for="n in (5 - vote)" />
 
       </div> <!-- /back-->
 
@@ -110,27 +108,31 @@
 
 
 <style lang="scss" scoped>
-@import "../style/partials/variables.scss";
+@use "src/style/partials/variables.scss" as *;
+
 .card {
   width: $card-width;
-  height: $card-heigth;
+  height: $card-height;
 
   color: white;
 
+  flex-shrink: 0;
+
   cursor: pointer;
   perspective: 1000px;
-    
+
   .cardInner {
     width: 100%;
     height: 100%;
-      
+
     position: relative;
     background-color: $darkest-color;
-      
+
     transition: transform 0.8s;
     transform-style: preserve-3d;
-      
-    .front, .back {
+
+    .front,
+    .back {
       position: absolute;
       top: 0;
       left: 0;
@@ -139,9 +141,10 @@
       height: 100%;
 
       background-color: $darkest-color;
-      -webkit-backface-visibility: hidden; /* Per Safari */
+      -webkit-backface-visibility: hidden;
+      /* Per Safari */
       backface-visibility: hidden;
-      }
+    }
 
     .back {
       transform: rotateY(180deg);
@@ -171,6 +174,7 @@
   font-size: 0.9rem;
   margin-bottom: 8px;
 }
+
 .langGroup {
   display: flex;
   align-items: center;
@@ -182,12 +186,13 @@
     width: 30px;
   }
 }
+
 div[class$="Group"] {
-  margin-bottom: 8px;   
+  margin-bottom: 8px;
+
   ul {
     list-style: none;
     font-size: 0.8rem;
   }
 }
-
 </style>

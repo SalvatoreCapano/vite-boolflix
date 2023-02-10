@@ -10,5 +10,6 @@ export const store = reactive({
     genresMovies: null,
     genresShows: null,
     allGenres: [],
-    loading: false
+    loading: false,
+    isMenuOpen: false
 });

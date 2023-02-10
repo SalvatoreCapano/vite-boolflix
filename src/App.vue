@@ -5,13 +5,13 @@ import { store } from './store';
 import AppHeader from './components/AppHeader.vue';
 import AppMain from './components/AppMain.vue';
 
-  export default {
+export default {
   name: "App",
   components: {
     AppHeader,
     AppMain
   },
-  data () {
+  data() {
     return {
       store,
       moviesGenresOK: false,
@@ -19,28 +19,19 @@ import AppMain from './components/AppMain.vue';
     }
   },
   methods: {
-    // getData(action, mediaType) {
     getData(mediaType) {
       store.loading = true;
       // Reset
       store.resultMovies = null;
       store.resultTVShows = null;
-      // let genreQuery = "";
-      // console.log(action);
-      // if (action == "discover") {
-      //   genreQuery = `&with_genres=${store.searchGenre}`
-      // }
-      // console.log(`La richiesta e' ${store.baseUrl}${action}/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}${genreQuery}`)
 
-      // Richiesta
-      // axios.get(`${store.baseUrl}${action}/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}${genreQuery}`)
       axios.get(`${store.baseUrl}search/${mediaType}?api_key=${store.apiKey}&query=${store.searchQuery}`)
         .then((response) => {
           if (mediaType == "movie") store.resultMovies = response.data.results;
           if (mediaType == "tv") store.resultTVShows = response.data.results;
           setTimeout(() => {
             store.loading = false;
-          }, 1000)
+          }, 1500)
         })
     },
     getGenres(mediaType) {
@@ -53,10 +44,9 @@ import AppMain from './components/AppMain.vue';
             store.genresShows = response.data.genres;
           }
           this.mergeGenresArrays();
-          console.log("Tutti i generi", store.allGenres);
         })
     },
-    mergeGenresArrays () {
+    mergeGenresArrays() {
       // Controlla se sono arrivati dati dei generi sia dei film che delle serie tv
       if (store.genresMovies != null && store.genresShows != null) {
 
@@ -69,8 +59,8 @@ import AppMain from './components/AppMain.vue';
     }
   },
   created() {
-    this.getGenres ("movie");
-    this.getGenres ("tv");
+    this.getGenres("movie");
+    this.getGenres("tv");
   }
 };
 </script>
@@ -79,13 +69,13 @@ import AppMain from './components/AppMain.vue';
 <template>
 
   <!-- <AppHeader @searchEvent="(action) => (getData(action, 'movie'), getData(action, 'tv'))"/> -->
-  <AppHeader @searchEvent="(getData('movie'), getData('tv'))"/>
+  <AppHeader @searchEvent="(getData('movie'), getData('tv'))" />
 
   <main>
     <div class="container">
 
       <AppMain />
-      
+
     </div>
   </main>
 
@@ -94,11 +84,15 @@ import AppMain from './components/AppMain.vue';
 
 
 <style lang="scss">
+@use "src/style/partials/variables.scss" as *;
 @import "./style/partials/reset.scss";
-@import "./style/partials/variables.scss";
+
 main {
   min-height: 100vh;
-  min-height: calc(100vh - 50px - 36px);  //viewport - logo - paddingHeader
+  min-height: calc(100vh - 50px - 36px); //viewport - logo - paddingHeader
   background-color: $dark-color;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 </style>

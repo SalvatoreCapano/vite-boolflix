@@ -48,7 +48,9 @@
     <section v-if="(store.resultMovies != null)">
         <h2 class="sectionTitle">Movies</h2>
 
-        <AppCard v-for="movie in store.resultMovies" v-if="store.loading == false"
+        <div class="cardsContainer">
+
+            <AppCard v-for="movie in store.resultMovies" v-if="store.loading == false"
             :title="movie.title"
             :ogTitle="movie.original_title"
             :vote="convertRating(movie.vote_average)"
@@ -60,16 +62,19 @@
             :genreIds="movie.genre_ids"
             />
         
-        <AppCardPlaceholder v-for="n in 10" v-else/>
+            <AppCardPlaceholder v-for="n in 2" v-else/>
 
-            
+        </div> <!-- /cardsContainer-->
+
     </section>
     
     <!-- TV Shows Section -->
     <section v-if="(store.resultTVShows != null)">
         <h2 class="sectionTitle">TV Shows</h2>
 
-        <AppCard v-for="show in store.resultTVShows" v-if="store.loading == false"
+        <div class="cardsContainer">
+
+            <AppCard v-for="show in store.resultTVShows" v-if="store.loading == false"
             :title="show.name"
             :ogTitle="show.original_name"
             :vote="convertRating(show.vote_average)"
@@ -81,7 +86,9 @@
             :genreIds="show.genre_ids"
             />
 
-        <AppCardPlaceholder v-for="n in 10" v-else/>
+            <AppCardPlaceholder v-for="n in 2" v-else/>
+
+        </div> <!-- /cardsContainer-->
 
     </section>
 
@@ -89,19 +96,23 @@
 
 
 <style lang="scss" scoped>
+    @use "src/style/partials/variables.scss" as *;
 
     section {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 1rem;
+        .cardsContainer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
 
         padding: 1.75rem 0;
 
         .sectionTitle {
-            flex-basis: 100%;
+            margin-bottom: 10px;
             color: aliceblue;
         }
   }
-
 </style>

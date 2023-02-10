@@ -1,21 +1,30 @@
 @media screen and (max-width: 896px) {
+
     header {
         .container {
             flex-wrap: wrap;
-            justify-content: center !important;
-            .logo {
-                margin-bottom: 24px;
+            justify-content: space-between !important;
+            align-items: center;
+
+            position: relative;
+
+            #menuLg {
+                display: none;
             }
+
+            #menuSm {
+                display: block;
+            }
+
+            
 
             .box {
                 flex-basis: 100%;
                 flex-wrap: wrap;
 
-                justify-content: flex-end;
-                
                 .searchbar {
                     flex-basis: 100%;
-    
+
                     input {
                         width: 100%;
                     }
@@ -24,7 +33,12 @@
         }
     }
 
+    .card {
+        width: 160px !important;
+        height: 240px !important;
+    }
+
     main {
-        // padding-top: 11.5rem !important;
+        min-height: calc(100vh - 50px - 36px - 1rem - 49px) !important;  //viewport - logo - paddingHeader - gapLogo/searchbar - alt. searchbar
     }
 }

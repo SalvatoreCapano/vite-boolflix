@@ -1,59 +1,63 @@
 <script>
 
-    import { store } from '../store';
+import { store } from '../store';
+import AppMenuLargeScreen from '../components/AppMenuLargeScreen.vue';
+import AppMenuSmallScreen from '../components/AppMenuSmallScreen.vue';
 
-    export default {
-        name: "AppHeader",
-        data () {
-            return {
-                store
-            }
+export default {
+    name: "AppHeader",
+    components: {
+        AppMenuLargeScreen,
+        AppMenuSmallScreen
+    },
+    data() {
+        return {
+            store
         }
     }
+}
 
 </script>
 
 
 <template>
-
-    <header>
-
+    <header :class="(store.isMenuOpen) ? ('noTransparecy') : ('')">
         <div class="container">
 
             <a href="#">
                 <div class="logo">
-                <img src="../assets/logo.png" alt="Boolflix Logo">
+                    <img src="../assets/logo.png" alt="Boolflix Logo">
                 </div> <!-- /logo-->
             </a>
 
-            <div class="box">
+            <div id="menuSm">
+                <AppMenuSmallScreen @filterEvent="$emit('filterEvent')" />
+            </div>
 
-                <!-- <select id="" v-model="store.searchGenre" @change="$emit('searchEvent', 'discover')"> -->
-                <select id="" v-model="store.searchGenre" @change="$emit('filterEvent')">
-                    <option value="" selected>All Genres</option>
-                    <option :value="genre.id" v-for="genre in store.allGenres">{{ genre.name }}</option>
-                </select>
+            <div class="box"> <!-- usato solo per scopi estetici-->
+
+                <div id="menuLg">
+                    <AppMenuLargeScreen @filterEvent="$emit('filterEvent')" />
+                </div>
 
                 <div class="searchbar">
-                    <!-- <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent', 'search')"> -->
-                    <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery" @keyup.enter="$emit('searchEvent')">
-                    <!-- <button @click="$emit('searchEvent', 'search')"> -->
+                    <input type="text" placeholder="Search movies, TV Shows..." v-model="store.searchQuery"
+                        @keyup.enter="$emit('searchEvent')">
                     <button @click="$emit('searchEvent')">
                         <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
                     </button>
                 </div> <!-- /searchbar-->
 
-            </div>
+            </div> <!-- /box-->
 
         </div> <!-- /container-->
-
     </header>
-
 </template>
 
 
 <style lang="scss" scoped>
-@import "../style/partials/variables.scss";
+// @import "../style/partials/variables.scss";
+@use "src/style/partials/variables.scss" as *;
 
 header {
     position: sticky;
@@ -64,38 +68,38 @@ header {
     padding: 18px 0;
 
     opacity: 0.98;
+    transition: opacity 0.2s;
 
     background-color: $darker-color;
     box-shadow: 0px 6px 20px 2px #00000080;
 
-  .container {
-    @include flexRowSpaced;
-  }
+    &.noTransparecy {
+        opacity: 1;
+    }
+
+    .container {
+        @include flexRowSpaced;
+        gap: 20px;
+    }
 }
 
 .logo {
-  img {
-    height: 50px;
-    display: block;
-  }
+    img {
+        height: 50px;
+        display: block;
+    }
+}
+
+#menuSm {
+    display: none;
 }
 
 .box {
-    @include flexRowSpaced;
+    display: flex;
+    align-items: center;
     gap: 1rem;
-
-    select {
-        color: aliceblue;
-        padding: 8px 12px;
-        border-radius: 12px;
-        border: 1px solid $border-color;
-        background-color: $darkest-color;
-
-        &:focus{
-            border-color: $brand-color;
-        }
-    }
 }
+
 .searchbar {
     border-radius: 12px;
     border: 1px solid $border-color;
@@ -122,14 +126,14 @@ header {
     button {
         padding: 10px 12px;
 
+        color: currentColor;
         font-size: 1.1rem;
 
         background: none;
         border: none;
-        color: currentColor;
         cursor: pointer;
 
-        &:active{
+        &:active {
             color: $brand-color;
         }
     }
@@ -138,5 +142,4 @@ header {
         border-color: $brand-color;
     }
 }
-
 </style>
