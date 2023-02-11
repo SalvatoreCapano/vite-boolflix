@@ -12,12 +12,16 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            // type: this.type
         }
-    },
-    props:{
+    }
+    ,
+    props: {
         type: String
-    },
+    }
+    // props: ['type']
+    ,
     methods: {
         getFlag(lang) {
             // Genera l'url dell'img di una bandiera a seconda della lingua
@@ -40,16 +44,20 @@ export default {
             // Converte il voto da [1-10] a [1-5]
             let newVote = Math.ceil(vote / 2);
             return newVote;
+        },
+        getTitle(item) {
+            if (this.type == "movie") return item.title;
+            if (this.type == "tv") return item.name;
+        },
+        getOgTitle(item) {
+            if (this.type == "movie") return item.original_title;
+            if (this.type == "tv") return item.original_name;
         }
     },
     computed: {
         defineArray() {
             if (this.type == "movie") return store.resultMovies;
             if (this.type == "tv") return store.resultTVShows;
-        },
-        definePropertyName() {
-            if (this.type == "movie") return "title";
-            if (this.type == "tv") return "name";
         }
     }
 }
@@ -59,17 +67,17 @@ export default {
 
 <template>
 
-    <AppCard v-for="item in defineArray" v-if="store.loading == false" 
-        :title="`item.${definePropertyName}`"
-        :ogTitle="`item.original_${definePropertyName}`" 
+    <AppCard v-for="item in defineArray" v-if="store.loading == false"
+    :title="getTitle(item)"
+        :ogTitle="getOgTitle(item)" 
         :vote="convertRating(item.vote_average)" 
         :lang="item.original_language"
         :flagUrl="getFlag(item.original_language)" 
         :imgUrl="item.poster_path" 
         :id="item.id" 
         :type="this.type"
-        :genreIds="item.genre_ids"
-    />
+        :genreIds="item.genre_ids" 
+        />
 
 </template>
 
