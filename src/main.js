@@ -10,7 +10,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 /* import specific icons */
 import { faStar } from '@fortawesome/free-regular-svg-icons'
 import { faStar as faStarSolid, faMagnifyingGlass, faBars} from '@fortawesome/free-solid-svg-icons'
-// import { faStar } from '@fortawesome/free-regular-svg-icons'
 
 /* add icons to the library */
 library.add(faStar, faStarSolid, faMagnifyingGlass, faBars)

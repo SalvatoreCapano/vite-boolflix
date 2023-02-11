@@ -42,7 +42,9 @@ export default {
       this.genreIds.forEach(id => {
         store.allGenres.forEach(genre => {
           // Controlla i generi a cui e' associato il film e inserisce i loro nomi in un array
-          if (genre.id == id) this.genres.push(genre.name);
+          if (this.genres.length < 3) {
+            if (genre.id == id) this.genres.push(genre.name);
+          }
         });
       });
     }
@@ -70,7 +72,10 @@ export default {
 
       <div class="front">
 
-        <img :src="posterBaseUrl + postCoverSize + imgUrl" :alt="ogTitle" class="poster">
+        <img :src="posterBaseUrl + postCoverSize + imgUrl" :alt="ogTitle" class="poster" v-if="imgUrl">
+        <div v-else class="posterPlaceholder">
+          <span>Poster not available</span>
+        </div>
 
       </div> <!-- /front-->
 
@@ -78,7 +83,7 @@ export default {
 
         <h3 class="title">{{ title }}</h3>
 
-        <p class="ogTitle" v-if="!(title == ogTitle)">Original Title: {{ ogTitle }}</p>
+        <p class="ogTitle" v-if="(title != ogTitle)">Original Title: {{ ogTitle }}</p>
 
         <div class="langGroup">
           <span>Lang.: {{ lang }}</span>
@@ -121,7 +126,7 @@ export default {
   color: white;
 
   flex-shrink: 0;
-
+  border-radius: 3px;
   cursor: pointer;
   perspective: 1000px;
 
@@ -131,6 +136,7 @@ export default {
 
     position: relative;
     background-color: $darkest-color;
+    border-radius: inherit;
 
     transition: transform 0.8s;
     transform-style: preserve-3d;
@@ -144,7 +150,9 @@ export default {
       width: 100%;
       height: 100%;
 
+      border-radius: inherit;
       background-color: $darkest-color;
+
       -webkit-backface-visibility: hidden;
       /* Per Safari */
       backface-visibility: hidden;
@@ -155,6 +163,23 @@ export default {
       padding: 5px;
 
       overflow-y: auto;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -3px;
+      left: 0px;
+      bottom: -3px;
+      right: calc(100% + 3px);
+
+      border-radius: inherit;
+      transition: all 0.5s;
+      background-color: red;
+    }
+
+    &:hover::before {
+      right: 0px;
     }
   }
 
@@ -168,6 +193,14 @@ export default {
   height: 100%;
   width: 100%;
   object-fit: cover;
+  border-radius: inherit;
+}
+
+.posterPlaceholder {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .title {
@@ -196,7 +229,20 @@ div[class$="Group"] {
 
   ul {
     list-style: none;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    display: flex;
+    flex-wrap: wrap;
   }
+}
+
+.castGroup {
+  li:not(:last-child):after {
+      content: ", ";
+  }
+}
+
+.genreGroup ul {
+  justify-content: space-between;
+  font-size: 0.6rem;
 }
 </style>

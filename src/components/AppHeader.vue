@@ -56,7 +56,6 @@ export default {
 
 
 <style lang="scss" scoped>
-// @import "../style/partials/variables.scss";
 @use "src/style/partials/variables.scss" as *;
 
 header {

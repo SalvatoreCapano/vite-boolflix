@@ -89,7 +89,7 @@ export default {
 
 <template>
 
-  <AppHeader @searchEvent="(getData('search', 'movie'), getData('search', 'tv'))" />
+  <AppHeader @searchEvent="(getData('search', 'movie'), getData('search', 'tv'), store.isMenuOpen = false)" />
 
   <main>
 
@@ -112,9 +112,6 @@ export default {
 
 main {
   min-height: 100vh;
-  // min-height: calc(100vh - 50px - 36px); 
-  //viewport - logo - paddingHeader
-  // padding-top: 4rem;
   background-color: $dark-color;
 
   overflow-x: hidden;
