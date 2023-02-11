@@ -150,6 +150,8 @@ export default {
       width: 100%;
       height: 100%;
 
+      z-index: 5;
+
       border-radius: inherit;
       background-color: $darkest-color;
 
@@ -172,10 +174,11 @@ export default {
       left: 0px;
       bottom: -3px;
       right: calc(100% + 3px);
+      z-index: 4;
 
       border-radius: inherit;
       transition: all 0.5s;
-      background-color: red;
+      background-color: $brand-color;
     }
 
     &:hover::before {
