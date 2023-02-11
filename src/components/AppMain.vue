@@ -48,7 +48,7 @@ export default {
         <section class="mainSection">
 
             <h2 class="sectionTitle" v-if="store.firstSearchDone == false">Trending TV Shows</h2>
-            <h2 class="sectionTitle" v-else>Movies</h2>
+            <h2 class="sectionTitle" v-else>TV Shows</h2>
 
             <div class="cardsContainer">
 
