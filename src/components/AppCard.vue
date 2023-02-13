@@ -86,19 +86,20 @@ export default {
         <p class="ogTitle" v-if="(title != ogTitle)">Original Title: {{ ogTitle }}</p>
 
         <div class="langGroup">
-          <span>Lang.: {{ lang }}</span>
+          <!-- <span>Lang.: {{ lang }}</span> -->
+          <!-- <span>{{ lang }}</span> -->
           <img :src="flagUrl" :alt="lang">
         </div>
 
         <div class="castGroup">
-          <span>Cast</span>
+          <!-- <span>Cast</span> -->
           <ul>
             <li v-for="actor in cast">{{ actor }}</li>
           </ul>
         </div>
 
         <div class="genreGroup">
-          <span>Genre</span>
+          <!-- <span>Genre</span> -->
           <ul>
             <li v-for="genre in this.genres">{{ genre }}</li>
           </ul>
@@ -208,6 +209,7 @@ export default {
 
 .title {
   margin-bottom: 8px;
+  font-size: 1.1rem;
 }
 
 .ogTitle {

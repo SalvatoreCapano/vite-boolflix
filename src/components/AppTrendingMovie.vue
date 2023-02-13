@@ -8,13 +8,24 @@ export default {
     },
     data() {
         return {
-            store
+            store,
+            index: 0
+        }
+    },
+    methods: {
+        trendingMovieIndex () {
+            setInterval(() => {
+                return this.index++;
+            }, 10000)
         }
     },
     computed: {
         trendingPosterPath() {
-            return `https://image.tmdb.org/t/p/original/${store.resultMovies[1].backdrop_path}`;
+            return `https://image.tmdb.org/t/p/original/${store.resultMovies[this.index].backdrop_path}`;
         }
+    },
+    created() {
+        this.trendingMovieIndex();
     }
 }
 
@@ -26,8 +37,8 @@ export default {
     <div class="suggestedTrendingMovie" v-if="store.firstSearchDone == false">
 
         <div class="info">
-            <h3>{{ store.resultMovies[1].title }}</h3>
-            <p>{{ store.resultMovies[1].overview }}</p>
+            <h3>{{ store.resultMovies[this.index].title }}</h3>
+            <p>{{ store.resultMovies[this.index].overview }}</p>
         </div>
 
         <img :src="trendingPosterPath" alt="">
@@ -64,7 +75,7 @@ export default {
         background: linear-gradient(172deg, rgba(0, 0, 0, 0.6712885837928921) 0%, rgba(255, 255, 255, 0) 50%);
 
         h3 {
-            font-size: clamp(1.3rem, 10vw, 2.4rem);
+            font-size: clamp(1.3rem, 10vw, 2.6rem);
         }
     }
 
@@ -72,6 +83,27 @@ export default {
         width: 65%;
         display: block;
         margin-left: auto;
+    }
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        z-index: 1;
+        height: 4px;
+        background-color: $brand-color;
+
+        animation: barWidth 10s linear infinite;
+    }
+}
+
+@keyframes barWidth {
+    from {
+        width: 0;
+    }
+    to {
+        width: 100%;
     }
 }
 </style>

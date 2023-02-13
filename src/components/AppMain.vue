@@ -48,7 +48,7 @@ export default {
         <section class="mainSection">
 
             <h2 class="sectionTitle" v-if="store.firstSearchDone == false">Trending TV Shows</h2>
-            <h2 class="sectionTitle" v-else>Movies</h2>
+            <h2 class="sectionTitle" v-else>TV Shows</h2>
 
             <div class="cardsContainer">
 
@@ -68,9 +68,9 @@ export default {
 <style lang="scss" scoped>
 @use "src/style/partials/variables.scss" as *;
 
-section {
-    margin: 6rem 0 3rem;
-    position: relative;
+.mainSection {
+    margin: 5rem 0 3rem;
+    // position: relative;
     
     .sectionTitle {
         margin-bottom: 10px;
