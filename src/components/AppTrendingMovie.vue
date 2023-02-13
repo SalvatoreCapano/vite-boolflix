@@ -55,6 +55,8 @@ export default {
     background-color: $dark-color;
     position: relative;
 
+    overflow: hidden;
+
     .info {
         position: absolute;
         left: 0;
@@ -69,6 +71,8 @@ export default {
         flex-direction: column;
         justify-content: center;
         gap: 20px;
+
+        overflow-y: auto;
 
         color: aliceblue;
         background: rgb(0, 0, 0);

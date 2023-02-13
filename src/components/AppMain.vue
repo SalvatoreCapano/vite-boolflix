@@ -69,7 +69,7 @@ export default {
 @use "src/style/partials/variables.scss" as *;
 
 .mainSection {
-    margin: 5rem 0 3rem;
+    margin: 6rem 0 3rem;
     // position: relative;
     
     .sectionTitle {

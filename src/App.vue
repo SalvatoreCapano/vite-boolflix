@@ -31,6 +31,12 @@ export default {
       store.resultMovies = null;
       store.resultTVShows = null;
 
+      window.scrollTo ({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+
       // Cambia il valore di "firstSearchDone", che indica se la ricerca attuale e'
       //quella fatta all'avvio del programma o quella avviata dall'utente
       if (action != "discover") store.firstSearchDone = true;
