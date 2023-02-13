@@ -106,8 +106,11 @@ export default {
 
         </div>
 
-        <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote" />
-        <font-awesome-icon icon="fa-regular fa-star" v-for="n in (5 - vote)" />
+        <div class="voteGroup">
+          <font-awesome-icon icon="fa-solid fa-star" v-for="n in vote" />
+          <font-awesome-icon icon="fa-regular fa-star" v-for="n in (5 - vote)" />
+        </div>
+
 
       </div> <!-- /back-->
 
@@ -230,7 +233,7 @@ export default {
 }
 
 div[class$="Group"] {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
 
   ul {
     list-style: none;
@@ -247,7 +250,13 @@ div[class$="Group"] {
 }
 
 .genreGroup ul {
-  justify-content: space-between;
+  justify-content: center;
   font-size: 0.6rem;
+  font-weight: bold;
 }
+
+.voteGroup {
+  text-align: center;
+}
+
 </style>
